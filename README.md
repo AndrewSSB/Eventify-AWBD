@@ -2,7 +2,7 @@
 Eventify enable users to organize and manage events, handle attendee registrations, and provide insights into event analytics. 
 
 
-* Java project
+Java project
 ---------------
 * Master: Software Engineering 
 * Year: 1 
