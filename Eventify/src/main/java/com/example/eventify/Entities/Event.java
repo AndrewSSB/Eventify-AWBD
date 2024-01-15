@@ -19,6 +19,16 @@ public class Event extends BaseEntity {
     @Column(name = "Description")
     private String Description;
 
+    public Event(){
+
+    }
+
+    public Event(String eventName, Date eventDate, String description) {
+        EventName = eventName;
+        EventDate = eventDate;
+        Description = description;
+    }
+
     @ManyToOne
     private Venue Venue;
 

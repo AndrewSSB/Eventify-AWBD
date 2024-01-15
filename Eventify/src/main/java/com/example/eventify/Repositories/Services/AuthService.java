@@ -1,8 +1,10 @@
 package com.example.eventify.Repositories.Services;
 
+import com.example.eventify.DTO.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Auth.Login.LoginModel;
 import com.example.eventify.DTO.Auth.Login.LoginResponse;
 import com.example.eventify.DTO.Auth.Register.RegisterModel;
+import com.example.eventify.DTO.Auth.Register.RegisterModelValidator;
 import com.example.eventify.DTO.Auth.Register.RegisterResponse;
 import com.example.eventify.Entities.Role;
 import com.example.eventify.Entities.User;
@@ -38,19 +40,15 @@ public class AuthService {
         _jwtUtils = jwtUtils;
     }
 
-    public ResponseEntity<RegisterResponse> RegisterUser(RegisterModel model){
-        if (model.getEmail() == null ||
-            model.getUsername() == null ||
-            model.getPassword() == null ||
-            model.getLastName() == null ||
-            model.getFirstName() == null ||
-            model.getPhoneNumber() == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Maybe specify a message
+    public ResponseEntity<ApiResponse<RegisterResponse>> RegisterUser(RegisterModel model){
+        List<String> validationErrors = RegisterModelValidator.Validate(model);
+        if (!validationErrors.isEmpty()) {
+            return new ResponseEntity<>(new ApiResponse<>(validationErrors), HttpStatus.BAD_REQUEST);
         }
 
         Boolean alreadyExists = _userRepository.userAlreadyExists(model.getEmail(), model.getUsername());
-        if (alreadyExists){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Maybe specify a message
+        if (alreadyExists) {
+            return new ResponseEntity<>(new ApiResponse<>("Something wen wrong, please try again later"), HttpStatus.BAD_REQUEST);
         }
 
         String encodedPassword = _passwordEncoder.encode(model.getPassword());
@@ -59,7 +57,7 @@ public class AuthService {
         Optional<Role> role = _roleRepository.findByName("User");
 
         if (role.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST); // Maybe specify a message
+            return new ResponseEntity<>(new ApiResponse<>("Something wen wrong, if the error persists contact the development team"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         List<Role> roles = new ArrayList<>();
@@ -69,27 +67,25 @@ public class AuthService {
         _userRepository.save(user);
 
         String accessToken = _jwtUtils.GenerateToken(user);
-        RegisterResponse response = new RegisterResponse(accessToken);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(new RegisterResponse(accessToken)), HttpStatus.OK);
     }
 
-    public ResponseEntity<LoginResponse> LoginUser(LoginModel model){
+    public ResponseEntity<ApiResponse<LoginResponse>> LoginUser(LoginModel model){
         Optional<User> user = _userRepository.findByEmail(model.getEmail());
         if (user.isEmpty()){
             user = _userRepository.findByUsername(model.getUsername());
         }
 
         if (user.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>("Invalid username or password"), HttpStatus.BAD_REQUEST);
         }
 
         boolean matches = _passwordEncoder.matches(model.getPassword(), user.get().getPassword());
         if (!matches){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>("Invalid username or password"), HttpStatus.BAD_REQUEST);
         }
 
-        Authentication authentication = _authManager.authenticate(new UsernamePasswordAuthenticationToken
+        _authManager.authenticate(new UsernamePasswordAuthenticationToken
             (
                 model.getUsername() == null ? model.getEmail() : model.getUsername(),
                 model.getPassword()
@@ -97,7 +93,6 @@ public class AuthService {
         );
 
         String accessToken = _jwtUtils.GenerateToken(user.get());
-
-        return new ResponseEntity<>(new LoginResponse(accessToken), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse<>(new LoginResponse(accessToken)), HttpStatus.OK);
     }
 }
