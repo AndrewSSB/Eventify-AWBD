@@ -28,13 +28,14 @@ public class AuthService {
     private final IRoleRepository _roleRepository;
     private final PasswordEncoder _passwordEncoder;
     private final AuthenticationManager _authManager;
+    private final JwtUtils _jwtUtils;
 
-    @Autowired
-    public AuthService(IUserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, IRoleRepository roleRepository){
+    public AuthService(IUserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, IRoleRepository roleRepository, JwtUtils jwtUtils){
         _userRepository = userRepository;
         _passwordEncoder = passwordEncoder;
         _authManager = authManager;
         _roleRepository = roleRepository;
+        _jwtUtils = jwtUtils;
     }
 
     public ResponseEntity<RegisterResponse> RegisterUser(RegisterModel model){
@@ -67,7 +68,7 @@ public class AuthService {
 
         _userRepository.save(user);
 
-        String accessToken = JwtUtils.GenerateToken(user);
+        String accessToken = _jwtUtils.GenerateToken(user);
         RegisterResponse response = new RegisterResponse(accessToken);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -95,7 +96,7 @@ public class AuthService {
 //            )
 //        );
 
-        String accessToken = JwtUtils.GenerateToken(user.get());
+        String accessToken = _jwtUtils.GenerateToken(user.get());
 
         return new ResponseEntity<>(new LoginResponse(accessToken), HttpStatus.OK);
     }

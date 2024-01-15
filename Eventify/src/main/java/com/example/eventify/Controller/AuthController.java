@@ -31,9 +31,4 @@ public class AuthController {
     public ResponseEntity Login(@RequestBody LoginModel model){
         return _authService.LoginUser(model);
     }
-    @ResponseBody
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public ResponseEntity Test(@RequestBody LoginModel model){
-        return _authService.LoginUser(model);
-    }
 }
