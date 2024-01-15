@@ -46,14 +46,10 @@ public class CustomUserDetailsService implements UserDetailsService {
             authorities.add(name);
         }
 
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+        return org.springframework.security.core.userdetails.User.builder()
                 .username(user.get().getEmail() == null ? user.get().getUsername() : user.get().getEmail())
                 .password(user.get().getPassword())
                 .roles(String.valueOf(authorities))
                 .build();
-
-        System.out.println(userDetails.toString());
-
-        return userDetails;
     }
 }

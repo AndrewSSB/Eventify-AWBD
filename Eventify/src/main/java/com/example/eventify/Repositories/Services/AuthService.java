@@ -89,12 +89,12 @@ public class AuthService {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-//        Authentication authentication = _authManager.authenticate(new UsernamePasswordAuthenticationToken
-//            (
-//                model.getUsername() == null ? model.getEmail() : model.getUsername(),
-//                user.get().getPassword()
-//            )
-//        );
+        Authentication authentication = _authManager.authenticate(new UsernamePasswordAuthenticationToken
+            (
+                model.getUsername() == null ? model.getEmail() : model.getUsername(),
+                model.getPassword()
+            )
+        );
 
         String accessToken = _jwtUtils.GenerateToken(user.get());
 

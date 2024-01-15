@@ -40,6 +40,7 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/", "/api/auth/login", "/api/auth/register").permitAll();
+//                    auth.requestMatchers("/test/user/role").hasRole("User");
                     auth.anyRequest().authenticated();
                 })
                 .csrf(AbstractHttpConfigurer::disable)

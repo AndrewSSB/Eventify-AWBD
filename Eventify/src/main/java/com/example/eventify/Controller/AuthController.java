@@ -4,10 +4,7 @@ import com.example.eventify.DTO.Auth.Login.LoginModel;
 import com.example.eventify.DTO.Auth.Register.RegisterModel;
 import com.example.eventify.Repositories.Services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
