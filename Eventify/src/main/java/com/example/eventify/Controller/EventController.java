@@ -47,7 +47,7 @@ public class EventController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public ResponseEntity<ApiResponse<EventResponse>> DeleteEvent(@RequestBody EditEventModel model){
+    public ResponseEntity<ApiResponse<EventResponse>> EditEvent(@RequestBody EditEventModel model){
         return _eventService.EditEvent(model);
     }
 }

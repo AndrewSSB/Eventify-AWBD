@@ -1,11 +1,16 @@
 package com.example.eventify.DTO.Event;
 
 import com.example.eventify.Entities.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
+@Setter
+@Getter
 public class EventResponse {
+    private Long Id;
     private String EventName;
     private Date EventDate;
     private String Description;
