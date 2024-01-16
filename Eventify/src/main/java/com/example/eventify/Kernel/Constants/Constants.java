@@ -12,7 +12,13 @@ public class Constants {
 
     // Event
     public static final String InvalidEvent = "There is no event with the specified Id";
+
+    // Venue
     public static final String InvalidVenue = "There is no venue with the specified Id";
+
+    // Tag
+    public static final String InvalidTag = "There is no tag with the specified Id";
+    public static final String TagNameNull = "TagName cannot be null";
 
     // Generic messages
     public static final String GenericMessage = "Something wen wrong, please try again later";
