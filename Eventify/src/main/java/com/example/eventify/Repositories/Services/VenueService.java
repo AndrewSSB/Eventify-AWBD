@@ -1,5 +1,6 @@
 package com.example.eventify.Repositories.Services;
 
+import com.example.eventify.Kernel.Constants.Constants;
 import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Venue.CreateVenueModel;
 import com.example.eventify.DTO.Venue.EditVenueModel;
@@ -41,7 +42,7 @@ public class VenueService {
         Optional<Venue> optionalVenue = _venueRepository.findById(model.getId());
 
         if (optionalVenue.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("There is no venue with the specified Id"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidVenue), HttpStatus.BAD_REQUEST);
         }
 
         Venue venue = optionalVenue.get();
@@ -68,7 +69,7 @@ public class VenueService {
         Optional<Venue> venue = _venueRepository.findById(Id);
 
         if (venue.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("There is no venue with the specified Id"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidVenue), HttpStatus.BAD_REQUEST);
         }
 
         _venueRepository.delete(venue.get());
@@ -91,7 +92,7 @@ public class VenueService {
         Optional<Venue> venue = _venueRepository.findById(Id);
 
         if (venue.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("There is no venue with the specified Id"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidVenue), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(new ApiResponse<>(_mapper.map(venue.get(), VenueResponse.class)), HttpStatus.OK);
