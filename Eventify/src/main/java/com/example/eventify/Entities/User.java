@@ -2,6 +2,7 @@ package com.example.eventify.Entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.apache.tomcat.util.codec.binary.Base64;
 

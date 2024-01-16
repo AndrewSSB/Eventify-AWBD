@@ -1,11 +1,9 @@
 package com.example.eventify.Repositories.Services;
 
 import com.example.eventify.DTO.ApiResponse.ApiResponse;
-import com.example.eventify.DTO.Event.EventResponse;
 import com.example.eventify.DTO.Venue.CreateVenueModel;
 import com.example.eventify.DTO.Venue.EditVenueModel;
 import com.example.eventify.DTO.Venue.VenueResponse;
-import com.example.eventify.Entities.Event;
 import com.example.eventify.Entities.Venue;
 import com.example.eventify.Repositories.Interfaces.IVenueRepository;
 import org.modelmapper.ModelMapper;

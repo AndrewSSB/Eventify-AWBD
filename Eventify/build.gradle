@@ -41,13 +41,14 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:3.0.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'javax.xml.bind:jaxb-api:2.3.0'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	compileOnly 'org.modelmapper:modelmapper:3.2.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.modulith:spring-modulith-starter-test'
-	compileOnly 'org.projectlombok:lombok:1.18.30'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
-	compileOnly 'org.modelmapper:modelmapper:3.2.0'
+	testImplementation 'org.modelmapper:modelmapper:3.2.0'
 }
 
 dependencyManagement {
