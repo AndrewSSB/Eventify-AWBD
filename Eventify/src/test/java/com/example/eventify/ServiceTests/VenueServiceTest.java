@@ -4,7 +4,6 @@ import com.example.eventify.DTO.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Venue.CreateVenueModel;
 import com.example.eventify.DTO.Venue.EditVenueModel;
 import com.example.eventify.DTO.Venue.VenueResponse;
-import com.example.eventify.Entities.Event;
 import com.example.eventify.Entities.Venue;
 import com.example.eventify.Repositories.Interfaces.IVenueRepository;
 import com.example.eventify.Repositories.Services.VenueService;
@@ -18,12 +17,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
