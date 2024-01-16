@@ -1,6 +1,6 @@
 package com.example.eventify.ServiceTests;
 
-import com.example.eventify.DTO.ApiResponse.ApiResponse;
+import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Venue.CreateVenueModel;
 import com.example.eventify.DTO.Venue.EditVenueModel;
 import com.example.eventify.DTO.Venue.VenueResponse;

@@ -1,11 +1,14 @@
 package com.example.eventify.Kernel;
 
 import com.example.eventify.Entities.User;
+import com.example.eventify.Kernel.Constants.Constants;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +19,19 @@ import java.util.List;
 
 @Component
 public class JwtUtils {
-    private final String SECRET_KEY = "OfjJUPUVgPGXL5sAsgzxk3qFG7j3e83JdCGG1yBklLu1XY61WCJ9C8CjWfQUmtQQc5crLW1E7sUegE5L8R4zta314ZFGbgT5EieJV2uiValSF3oDIJ0bNRgMDk+ovQxcme87ppV69cWywTEHyxmiHHKAxDBWd9WMUTFfxILI6fY=";
-    private final long EXPIRATION_TIME = 7_200_000; // 2 hours
+    private final String SECRET_KEY;
     private final JwtParser jwtParser;
-    private final String TOKEN_HEADER = "Authorization";
-    private final String TOKEN_PREFIX = "Bearer";
 
-    public JwtUtils(){
+//    public JwtUtils(){
+//        this.jwtParser = Jwts
+//                .parserBuilder()
+//                .setSigningKey(GetSignatureKey())
+//                .build();
+//    }
+
+    @Autowired
+    public JwtUtils(@Value("${jwt-secret}") String secretKey){
+        SECRET_KEY = secretKey;
         this.jwtParser = Jwts
                 .parserBuilder()
                 .setSigningKey(GetSignatureKey())
@@ -34,7 +43,7 @@ public class JwtUtils {
         claims.put("username", user.getUsername());
         claims.put("userId", user.getId());
         Date tokenCreation = new Date();
-        Date tokenValidity = new Date(System.currentTimeMillis() + EXPIRATION_TIME);
+        Date tokenValidity = new Date(System.currentTimeMillis() + Constants.EXPIRATION_TIME);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -60,8 +69,8 @@ public class JwtUtils {
     }
 
     public String ResolveToken(HttpServletRequest request) {
-        String authHeader = request.getHeader(TOKEN_HEADER);
-        if (authHeader != null && authHeader.matches("^Bearer (.*)$")) {
+        String authHeader = request.getHeader(Constants.TOKEN_HEADER);
+        if (authHeader != null && authHeader.matches(String.format("^%s (.*)$", Constants.TOKEN_PREFIX))) {
             return authHeader.substring(7);
         }
 

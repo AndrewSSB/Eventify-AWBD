@@ -1,4 +1,4 @@
-package com.example.eventify.DTO.ErrorResponse;
+package com.example.eventify.Kernel.GenericResponse.ErrorResponse;
 
 import lombok.Getter;
 import lombok.Setter;

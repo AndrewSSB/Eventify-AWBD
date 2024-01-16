@@ -1,6 +1,7 @@
 package com.example.eventify.Repositories.Services;
 
-import com.example.eventify.DTO.ApiResponse.ApiResponse;
+import com.example.eventify.Kernel.Constants.Constants;
+import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Event.CreateEventModelValidator;
 import com.example.eventify.DTO.Event.EditEventModel;
 import com.example.eventify.DTO.Event.EventResponse;
@@ -80,7 +81,7 @@ public class EventService {
         Optional<Event> event = _eventRepository.findById(id);
 
         if (event.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("There is no event with the specified Id"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidEvent), HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(new ApiResponse<>(_mapper.map(event.get(), EventResponse.class)), HttpStatus.OK);
@@ -90,7 +91,7 @@ public class EventService {
         Optional<Event> event = _eventRepository.findById(id);
 
         if (event.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("There is no event with the specified Id"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidEvent), HttpStatus.BAD_REQUEST);
         }
 
         _eventRepository.delete(event.get());
@@ -102,7 +103,7 @@ public class EventService {
         Optional<Event> optionalEvent = _eventRepository.findById(model.getId());
 
         if (optionalEvent.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("There is no event with the specified Id"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidEvent), HttpStatus.BAD_REQUEST);
         }
 
         Event event = optionalEvent.get();

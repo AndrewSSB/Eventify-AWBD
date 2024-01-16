@@ -2,6 +2,7 @@ package com.example.eventify.Kernel;
 
 import com.example.eventify.Entities.Role;
 import com.example.eventify.Entities.User;
+import com.example.eventify.Kernel.Constants.Constants;
 import com.example.eventify.Repositories.Interfaces.IRoleRepository;
 import com.example.eventify.Repositories.Interfaces.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with username or email: " + input);
+            throw new UsernameNotFoundException(Constants.UserNotFound + input);
         }
 
         List<String> authorities = new ArrayList<>();

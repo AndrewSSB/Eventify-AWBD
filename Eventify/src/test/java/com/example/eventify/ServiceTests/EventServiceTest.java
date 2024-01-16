@@ -1,11 +1,9 @@
 package com.example.eventify.ServiceTests;
 
-import com.example.eventify.DTO.ApiResponse.ApiResponse;
+import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.CreateEventModel;
 import com.example.eventify.DTO.Event.EditEventModel;
 import com.example.eventify.DTO.Event.EventResponse;
-import com.example.eventify.DTO.Venue.EditVenueModel;
-import com.example.eventify.DTO.Venue.VenueResponse;
 import com.example.eventify.Entities.*;
 import com.example.eventify.Repositories.Interfaces.*;
 import com.example.eventify.Repositories.Services.EventService;

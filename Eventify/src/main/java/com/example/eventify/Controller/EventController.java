@@ -1,6 +1,6 @@
 package com.example.eventify.Controller;
 
-import com.example.eventify.DTO.ApiResponse.ApiResponse;
+import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Event.EditEventModel;
 import com.example.eventify.DTO.Event.EventResponse;
 import com.example.eventify.DTO.CreateEventModel;

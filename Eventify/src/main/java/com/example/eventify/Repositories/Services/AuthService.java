@@ -1,6 +1,7 @@
 package com.example.eventify.Repositories.Services;
 
-import com.example.eventify.DTO.ApiResponse.ApiResponse;
+import com.example.eventify.Kernel.Constants.Constants;
+import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.DTO.Auth.Login.LoginModel;
 import com.example.eventify.DTO.Auth.Login.LoginResponse;
 import com.example.eventify.DTO.Auth.Register.RegisterModel;
@@ -46,7 +47,7 @@ public class AuthService {
 
         Boolean alreadyExists = _userRepository.userAlreadyExists(model.getEmail(), model.getUsername());
         if (alreadyExists) {
-            return new ResponseEntity<>(new ApiResponse<>("Something wen wrong, please try again later"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.GenericMessage), HttpStatus.BAD_REQUEST);
         }
 
         String encodedPassword = _passwordEncoder.encode(model.getPassword());
@@ -55,7 +56,7 @@ public class AuthService {
         Optional<Role> role = _roleRepository.findByName("User");
 
         if (role.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("Something wen wrong, if the error persists contact the development team"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.ContactTeam), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         List<Role> roles = new ArrayList<>();
@@ -75,12 +76,12 @@ public class AuthService {
         }
 
         if (user.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>("Invalid username or password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidUsernameOrPassword), HttpStatus.BAD_REQUEST);
         }
 
         boolean matches = _passwordEncoder.matches(model.getPassword(), user.get().getPassword());
         if (!matches){
-            return new ResponseEntity<>(new ApiResponse<>("Invalid username or password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidUsernameOrPassword), HttpStatus.BAD_REQUEST);
         }
 
         _authManager.authenticate(new UsernamePasswordAuthenticationToken

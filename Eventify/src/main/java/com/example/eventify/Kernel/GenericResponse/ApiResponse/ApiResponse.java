@@ -1,4 +1,4 @@
-package com.example.eventify.DTO.ApiResponse;
+package com.example.eventify.Kernel.GenericResponse.ApiResponse;
 
 import lombok.Getter;
 import lombok.Setter;
