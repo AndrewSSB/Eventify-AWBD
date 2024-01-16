@@ -40,7 +40,8 @@ public class EventController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+//    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<String>> DeleteEvent(@PathVariable Long id){
         return _eventService.DeleteEvent(id);
     }

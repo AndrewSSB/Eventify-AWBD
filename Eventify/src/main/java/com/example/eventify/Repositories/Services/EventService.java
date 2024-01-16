@@ -57,7 +57,10 @@ public class EventService {
 
         // Set Venue
         Optional<Venue> venueOptional = _venueRepository.findById(model.getVenueId());
-        venueOptional.ifPresent(event::setVenue);
+        if (venueOptional.isEmpty()){
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidVenue), HttpStatus.BAD_REQUEST);
+        }
+        event.setVenue(venueOptional.get());
 
         // Set Tags
         List<Tag> tags = _tagRepository.findAllById(model.getTagIds());
@@ -69,7 +72,10 @@ public class EventService {
 
         // Set Organizer
         Optional<User> organizerOptional = _userRepository.findById(model.getOrganizerId());
-        organizerOptional.ifPresent(event::setOrganizer);
+        if (organizerOptional.isEmpty()){
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidVenue), HttpStatus.BAD_REQUEST);
+        }
+        event.setOrganizer(organizerOptional.get());
 
         // Save the event to the database
         _eventRepository.save(event);

@@ -2,8 +2,6 @@ package com.example.eventify.Controller;
 
 import com.example.eventify.DTO.Speaker.CreateSpeakerModel;
 import com.example.eventify.DTO.Speaker.SpeakerResponse;
-import com.example.eventify.DTO.Venue.CreateVenueModel;
-import com.example.eventify.DTO.Venue.VenueResponse;
 import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
 import com.example.eventify.Repositories.Services.SpeakerService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -20,10 +20,22 @@ public class Constants {
     public static final String InvalidTag = "There is no tag with the specified Id";
     public static final String TagNameNull = "TagName cannot be null";
 
+    // User
+    public static final String InvalidUser = "Invalid user";
+
+    // Registration
+    public static final String RegistrationLimit = "The event has reached its registration limit";
+
     // Generic messages
     public static final String GenericMessage = "Something wen wrong, please try again later";
     public static final String ContactTeam = "Something wen wrong, if the error persists contact the development team";
 
     // Custom user details
     public static final String UserNotFound = "User not found with username or email: ";
+
+    // Validators
+    public static final String INVALID_EMAIL_FORMAT = "Invalid email format";
+    public static final String INVALID_PASSWORD = "Password must contain at least 8 characters";
+    public static final String PhoneNumberRegex = "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$";
+    public static final String INVALID_RATING = "Rating should be from 0 to 5";
 }

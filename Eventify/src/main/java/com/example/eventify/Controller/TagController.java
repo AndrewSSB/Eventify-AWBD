@@ -34,7 +34,7 @@ public class TagController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ApiResponse<TagResponse>> GetVenueById(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<TagResponse>> GetTagById(@PathVariable Long id){
         return _tagService.GetTagById(id);
     }
 }

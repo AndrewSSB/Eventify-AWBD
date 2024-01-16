@@ -23,5 +23,4 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserResponse>> GetUserProfile(){
         return _userService.GetUserProfile();
     }
-
 }
