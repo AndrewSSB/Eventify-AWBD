@@ -1,4 +1,4 @@
 package com.example.eventify.ServiceTests;
 
-public class UserService {
+public class TagServiceTest {
 }
