@@ -42,6 +42,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'javax.xml.bind:jaxb-api:2.3.0'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.2.1'
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 	compileOnly 'org.projectlombok:lombok:1.18.30'

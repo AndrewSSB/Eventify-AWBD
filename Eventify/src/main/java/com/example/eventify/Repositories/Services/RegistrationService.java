@@ -1,5 +1,7 @@
 package com.example.eventify.Repositories.Services;
 
+import com.example.eventify.DTO.Registration.CancelRegistrationModel;
+import com.example.eventify.DTO.Registration.ConfirmRegistrationModel;
 import com.example.eventify.DTO.Registration.CreateRegistrationModel;
 import com.example.eventify.Entities.Event;
 import com.example.eventify.Entities.Registration;
@@ -16,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -51,12 +54,48 @@ public class RegistrationService {
         }
 
         Registration registration = new Registration();
+        registration.setEvent(eventOptional.get());
+        registration.setUser(user.get());
         registration.setStatus("PENDING");
 
         _registrationRepository.save(registration);
 
         return new ResponseEntity<>(new ApiResponse<>(), HttpStatus.OK);
     }
+
+    public ResponseEntity<ApiResponse<String>> CancelRegistration(CancelRegistrationModel model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String username = authentication.getPrincipal().toString();
+
+        Optional<User> user = _userRepository.findByUsername(username);
+
+        if (user.isEmpty()){
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidUser), HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Registration> optionalRegistration = _registrationRepository.findById(model.getRegistrationId());
+        if (optionalRegistration.isEmpty()){
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidRegistrationId), HttpStatus.BAD_REQUEST);
+        }
+
+        if (!Objects.equals(optionalRegistration.get().getUser().getUsername(), username)) {
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidRegisteredUser), HttpStatus.OK);
+        }
+
+        Registration registration = optionalRegistration.get();
+        registration.setStatus("CANCELED");
+
+        return new ResponseEntity<>(new ApiResponse<>(), HttpStatus.OK);
+    }
+//
+//    public ResponseEntity<ApiResponse<String>> ConfirmRegistration(ConfirmRegistrationModel model){
+//        if (model.getConfirmAll()){
+//            Optional<Registration> optionalRegistration = _registrationRepository
+//        }
+//
+//        return new ResponseEntity<>(new ApiResponse<>(), HttpStatus.OK);
+//    }
 
     private boolean IsRegistrationLimitReached(Event event){
         return event.getVenue().getCapacity() > 0;

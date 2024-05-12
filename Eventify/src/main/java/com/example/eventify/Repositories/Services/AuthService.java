@@ -12,6 +12,9 @@ import com.example.eventify.Entities.User;
 import com.example.eventify.Kernel.JwtUtils;
 import com.example.eventify.Repositories.Interfaces.IRoleRepository;
 import com.example.eventify.Repositories.Interfaces.IUserRepository;
+import com.example.eventify.Seeders.AccountSeeder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +33,7 @@ public class AuthService {
     private final PasswordEncoder _passwordEncoder;
     private final AuthenticationManager _authManager;
     private final JwtUtils _jwtUtils;
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     public AuthService(IUserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, IRoleRepository roleRepository, JwtUtils jwtUtils){
         _userRepository = userRepository;
@@ -47,6 +51,7 @@ public class AuthService {
 
         Boolean alreadyExists = _userRepository.userAlreadyExists(model.getEmail(), model.getUsername());
         if (alreadyExists) {
+            logger.info(Constants.AU_AlreadyRegistered);
             return new ResponseEntity<>(new ApiResponse<>(Constants.GenericMessage), HttpStatus.BAD_REQUEST);
         }
 
@@ -56,6 +61,7 @@ public class AuthService {
         Optional<Role> role = _roleRepository.findByName("User");
 
         if (role.isEmpty()){
+            logger.info(Constants.AU_NoRoles);
             return new ResponseEntity<>(new ApiResponse<>(Constants.ContactTeam), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -76,11 +82,13 @@ public class AuthService {
         }
 
         if (user.isEmpty()){
+            logger.info(Constants.InvalidUsernameOrPassword);
             return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidUsernameOrPassword), HttpStatus.BAD_REQUEST);
         }
 
         boolean matches = _passwordEncoder.matches(model.getPassword(), user.get().getPassword());
         if (!matches){
+            logger.info(Constants.InvalidUsernameOrPassword);
             return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidUsernameOrPassword), HttpStatus.BAD_REQUEST);
         }
 

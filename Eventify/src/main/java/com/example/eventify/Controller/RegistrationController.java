@@ -1,5 +1,6 @@
 package com.example.eventify.Controller;
 
+import com.example.eventify.DTO.Registration.CancelRegistrationModel;
 import com.example.eventify.DTO.Registration.CreateRegistrationModel;
 import com.example.eventify.DTO.Speaker.CreateSpeakerModel;
 import com.example.eventify.Kernel.GenericResponse.ApiResponse.ApiResponse;
@@ -20,7 +21,13 @@ public class RegistrationController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<ApiResponse<String>> AddSpeaker(@RequestBody CreateRegistrationModel model){
+    public ResponseEntity<ApiResponse<String>> AddRegistration(@RequestBody CreateRegistrationModel model){
         return registrationService.CreateRegistration(model);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+    public ResponseEntity<ApiResponse<String>> CancelRegistration(@RequestBody CancelRegistrationModel model){
+        return registrationService.CancelRegistration(model);
     }
 }

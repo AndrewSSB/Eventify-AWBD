@@ -19,7 +19,7 @@ public class AuthController {
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity Register(@RequestBody RegisterModel model){
+    public ResponseEntity register(@RequestBody RegisterModel model){
         return _authService.RegisterUser(model);
     }
 

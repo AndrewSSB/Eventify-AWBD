@@ -3,9 +3,12 @@ package com.example.eventify.Seeders;
 import com.example.eventify.DTO.Auth.Register.RegisterModel;
 import com.example.eventify.Entities.Role;
 import com.example.eventify.Entities.User;
+import com.example.eventify.Kernel.Constants.Constants;
 import com.example.eventify.Repositories.Interfaces.IRoleRepository;
 import com.example.eventify.Repositories.Interfaces.IUserRepository;
 import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class AccountSeeder {
     private final IRoleRepository _roleRepository;
     private final PasswordEncoder _passwordEncoder;
 
+    private static final Logger logger = LoggerFactory.getLogger(AccountSeeder.class);
+
     @Autowired
     public AccountSeeder(IUserRepository userRepository, IRoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         _userRepository = userRepository;
@@ -29,7 +34,6 @@ public class AccountSeeder {
 
     @PostConstruct
     public void seedRoles(){
-//        RegisterModel user = new RegisterModel("user", "Parola123!", "UserFirst", "UserLast", "user@gmail.com", "0741498829");
         RegisterModel organizer = new RegisterModel("organizer", "Parola123!", "OrganizerFirst", "OrganizerLast", "organizer@gmail.com", "0741498829");
         RegisterModel admin = new RegisterModel("admin", "Parola123!", "AdminFirst", "AdminLast", "admin@gmail.com", "0741498829");
 
@@ -37,13 +41,15 @@ public class AccountSeeder {
         Boolean adminExists = _userRepository.userAlreadyExists(organizer.getEmail(), organizer.getUsername());
 
         if (organizerExists || adminExists){
+            logger.info(String.format(Constants.AC_UserExists, organizer.getUsername() + ", " + admin.getUsername()));
             return;
         }
 
-        Optional<Role> organizerRole = _roleRepository.findByName("Organizer");
-        Optional<Role> adminRole = _roleRepository.findByName("Admin");
+        Optional<Role> organizerRole = _roleRepository.findByName(Constants.OrganizerRole);
+        Optional<Role> adminRole = _roleRepository.findByName(Constants.AdminRole);
 
         if (organizerRole.isEmpty() || adminRole.isEmpty()){
+            logger.info(String.format(Constants.AC_NoRolesFound, Constants.OrganizerRole + ", " + Constants.AdminRole));
             return;
         }
 

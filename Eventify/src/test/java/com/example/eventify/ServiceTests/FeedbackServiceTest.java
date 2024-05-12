@@ -56,7 +56,7 @@ public class FeedbackServiceTest {
         when(authentication.getPrincipal()).thenReturn("testUser");
 
         User user = new User();
-        user.setUsername("testUser");
+        user.setUsername("testUser1");
         when(userRepository.findByUsername("testUser")).thenReturn(Optional.of(user));
 
         Event event = new Event();
@@ -78,9 +78,11 @@ public class FeedbackServiceTest {
         ArgumentCaptor<Feedback> feedbackCaptor = ArgumentCaptor.forClass(Feedback.class);
         verify(feedbackRepository, times(1)).save(feedbackCaptor.capture());
         Feedback savedFeedback = feedbackCaptor.getValue();
+
         assertEquals("Great event!", savedFeedback.getComment());
         assertEquals(5, savedFeedback.getRating());
         assertEquals("testUser", savedFeedback.getUser().getUsername());
         assertEquals(1L, savedFeedback.getEvent().getId());
+        assertEquals("userName1", user.getUsername());
     }
 }
