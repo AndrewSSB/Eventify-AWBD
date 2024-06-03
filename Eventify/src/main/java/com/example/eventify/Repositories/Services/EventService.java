@@ -72,8 +72,9 @@ public class EventService {
 
         // Set Organizer
         Optional<User> organizerOptional = _userRepository.findById(model.getOrganizerId());
+        List<User> users = _userRepository.findAll();
         if (organizerOptional.isEmpty()){
-            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidVenue), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ApiResponse<>(Constants.InvalidUser), HttpStatus.BAD_REQUEST);
         }
         event.setOrganizer(organizerOptional.get());
 

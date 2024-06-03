@@ -29,7 +29,7 @@ public class TagService {
     }
 
     public ResponseEntity<ApiResponse<String>> CreateTag(CreateTagModel model){
-        if (!model.getTagName().isEmpty()) {
+        if (model.getTagName().isEmpty()) {
             return new ResponseEntity<>(new ApiResponse<>(Constants.TagNameNull), HttpStatus.BAD_REQUEST);
         }
 
